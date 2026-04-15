@@ -29,18 +29,28 @@
 
     <script type="module">
         import { signUp } from '../backend/auth.js';
-        document.getElementById('signupBtn').onclick = async () => {
+        
+        document.getElementById('signupBtn').addEventListener('click', async () => {
+            console.log("Signup button clicked");
             const email = document.getElementById('email').value;
             const pass = document.getElementById('pass').value;
             const role = document.getElementById('role').value;
+            
+            if (!email || !pass) {
+                alert("Por favor, preencha e-mail e senha.");
+                return;
+            }
+
             try {
+                console.log("Calling signUp...");
                 await signUp(email, pass, role);
                 alert("Conta criada! Verifique seu e-mail.");
                 window.location.href = 'login.html';
             } catch (err) {
+                console.error("Erro no registro:", err);
                 alert("Erro ao criar conta: " + err.message);
             }
-        };
+        });
     </script>
 </body>
 </html>
