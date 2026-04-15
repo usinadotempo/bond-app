@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bond | Verificação</title>
+    <style>
+        body { background: #050505; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    </style>
+</head>
+<body>
+    <div id="status">Validando seu acesso...</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const sbClient = window.supabase.createClient('https://lvxymjdbekmuqeyqrrwi.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eHltamRiZWttdXFleXFycndpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTI4ODUsImV4cCI6MjA5MTQyODg4NX0.9yNRM-DAdQx8h1tmit46M45WDubB3fPYLylufr9oRG8');
+
+        // O Supabase Auth no modo 'hash' redireciona com os dados na URL
+        // Precisamos processar esses dados e salvar a sessão
+        async function handleAuth() {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                document.getElementById('status').innerText = "Autenticando...";
+                window.location.href = 'dashboard.html';
+            } else {
+                document.getElementById('status').innerText = "Erro: Token não encontrado.";
+            }
+        }
+        handleAuth();
+    </script>
+</body>
+</html>
