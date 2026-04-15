@@ -27,30 +27,31 @@
         <button id="signupBtn">Registrar no Bond</button>
     </div>
 
-    <script type="module">
-        import { signUp } from '../backend/auth.js';
-        
-        document.getElementById('signupBtn').addEventListener('click', async () => {
-            console.log("Signup button clicked");
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Configurações (Essas deverão ser injetadas com segurança no build final)
+        const supabase = supabase.createClient('SUA_URL_SUPABASE', 'SUA_KEY_ANON');
+
+        document.getElementById('signupBtn').onclick = async () => {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('pass').value;
             const role = document.getElementById('role').value;
             
-            if (!email || !pass) {
-                alert("Por favor, preencha e-mail e senha.");
-                return;
-            }
-
             try {
-                console.log("Calling signUp...");
-                await signUp(email, pass, role);
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: pass,
+                    options: { data: { role: role } }
+                });
+                
+                if (error) throw error;
                 alert("Conta criada! Verifique seu e-mail.");
                 window.location.href = 'login.html';
             } catch (err) {
-                console.error("Erro no registro:", err);
                 alert("Erro ao criar conta: " + err.message);
             }
-        });
+        };
     </script>
 </body>
 </html>
