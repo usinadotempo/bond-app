@@ -82,19 +82,29 @@
                     <th>Progresso</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Sono Sagrado</td>
-                    <td style="color:var(--accent)">Ativo</td>
-                    <td>80%</td>
-                </tr>
-                <tr>
-                    <td>Explorador Digital</td>
-                    <td style="color:var(--accent)">Ativo</td>
-                    <td>45%</td>
-                </tr>
+            <tbody id="agreements-body">
+                <!-- Dados carregados via API -->
             </tbody>
         </table>
     </main>
+
+    <script type="module">
+        import { loadDashboardData } from './api.js';
+
+        async function initDashboard() {
+            const agreements = await loadDashboardData();
+            const body = document.getElementById('agreements-body');
+            if (agreements && agreements.length > 0) {
+                body.innerHTML = agreements.map(a => `
+                    <tr>
+                        <td>${a.title}</td>
+                        <td style="color:var(--accent)">${a.is_active ? 'Ativo' : 'Inativo'}</td>
+                        <td>${a.progress || '0%'}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+        initDashboard();
+    </script>
 </body>
 </html>
