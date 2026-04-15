@@ -1,5 +1,8 @@
+-- Criação do schema isolado para o Bond App
+CREATE SCHEMA IF NOT EXISTS bond_app;
+
 -- Tabela de perfis (Pai/Filho)
-CREATE TABLE profiles (
+CREATE TABLE bond_app.profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id),
     role TEXT CHECK (role IN ('parent', 'child')),
     full_name TEXT,
@@ -7,10 +10,10 @@ CREATE TABLE profiles (
 );
 
 -- Tabela de acordos (A "Mesa de Acordos")
-CREATE TABLE agreements (
+CREATE TABLE bond_app.agreements (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    parent_id UUID REFERENCES profiles(id),
-    child_id UUID REFERENCES profiles(id),
+    parent_id UUID REFERENCES bond_app.profiles(id),
+    child_id UUID REFERENCES bond_app.profiles(id),
     title TEXT NOT NULL,
     description TEXT,
     is_active BOOLEAN DEFAULT true,
@@ -18,9 +21,9 @@ CREATE TABLE agreements (
 );
 
 -- Tabela de recompensas
-CREATE TABLE rewards (
+CREATE TABLE bond_app.rewards (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    agreement_id UUID REFERENCES agreements(id),
+    agreement_id UUID REFERENCES bond_app.agreements(id),
     title TEXT NOT NULL,
     cost_in_coins INTEGER NOT NULL
 );
