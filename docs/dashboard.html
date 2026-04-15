@@ -28,12 +28,12 @@
         
         /* Dashboard Cards - Responsive */
         @media (max-width: 900px) {
-            body { flex-direction: column; }
-            nav { width: 100%; height: auto; flex-direction: row; justify-content: space-between; border-right: none; border-bottom: 1px solid #222; padding: 1rem 2rem; }
-            .nav-links { display: flex; gap: 1.5rem; }
-            .nav-links a { margin-bottom: 0; }
-            .stats-grid { grid-template-columns: 1fr; }
-            main { padding: 1.5rem; }
+            body { flex-direction: column; overflow-x: hidden; }
+            nav { width: 100vw; height: auto; flex-direction: row; justify-content: space-between; border-right: none; border-bottom: 1px solid #222; padding: 1rem 2rem; box-sizing: border-box; }
+            .nav-links { display: flex; gap: 1.5rem; overflow-x: auto; }
+            .nav-links a { margin-bottom: 0; white-space: nowrap; }
+            .stats-grid { grid-template-columns: 1fr; width: 100%; box-sizing: border-box; }
+            main { padding: 1.5rem; width: 100vw; box-sizing: border-box; overflow-x: hidden; }
             h1 { font-size: 2rem; }
         }
 
