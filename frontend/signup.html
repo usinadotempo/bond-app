@@ -30,8 +30,7 @@
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Configurações (Essas deverão ser injetadas com segurança no build final)
-        const supabase = supabase.createClient('', '');
+        const supabase = supabase.createClient('https://lvxymjdbekmuqeyqrrwi.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eHltamRiZWttdXFleXFycndpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTI4ODUsImV4cCI6MjA5MTQyODg4NX0.9yNRM-DAdQx8h1tmit46M45WDubB3fPYLylufr9oRG8');
 
         document.getElementById('signupBtn').onclick = async () => {
             const email = document.getElementById('email').value;
