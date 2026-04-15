@@ -100,7 +100,7 @@
     </main>
 
     <script type="module">
-        import { loadDashboardData } from './api.js';
+        import { loadDashboardData, createAgreement } from './api.js';
 
         window.toggleModal = () => {
             const modal = document.getElementById('agreementModal');
@@ -110,9 +110,14 @@
         window.saveAgreement = async () => {
             const title = document.getElementById('title').value;
             const desc = document.getElementById('desc').value;
-            // Aqui chamaria a função createAgreement do backend
-            console.log("Salvando:", title, desc);
-            toggleModal();
+            try {
+                await createAgreement(title, desc);
+                alert("Acordo criado!");
+                toggleModal();
+                initDashboard();
+            } catch (err) {
+                alert("Erro: " + err.message);
+            }
         }
 
         async function initDashboard() {

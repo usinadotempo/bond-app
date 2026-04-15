@@ -22,19 +22,17 @@ async function fetchActiveAgreements(parentId) {
 }
 
 /**
- * Integração simples para alimentar o dashboard
+ * Cria um novo acordo
+ * @param {string} title 
+ * @param {string} description 
  */
-async function loadDashboardData() {
-  try {
-    const parentId = localStorage.getItem('user_id'); // Exemplo de captura de sessão
-    const agreements = await fetchActiveAgreements(parentId);
-    
-    // Atualiza o DOM (exemplo básico)
-    console.log("Acordos carregados:", agreements);
-    return agreements;
-  } catch (err) {
-    console.error("Erro ao carregar dados:", err);
-  }
+async function createAgreement(title, description) {
+  const { data, error } = await supabase
+    .from('agreements')
+    .insert([{ title, description, parent_id: '00000000-0000-0000-0000-000000000000' }]); // placeholder ID
+
+  if (error) throw error;
+  return data;
 }
 
-export { loadDashboardData };
+export { loadDashboardData, createAgreement };
