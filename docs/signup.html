@@ -32,11 +32,11 @@
     <script>
         console.log("Script carregado.");
         try {
-            const supabase = window.supabase.createClient('https://lvxymjdbekmuqeyqrrwi.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eHltamRiZWttdXFleXFycndpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTI4ODUsImV4cCI6MjA5MTQyODg4NX0.9yNRM-DAdQx8h1tmit46M45WDubB3fPYLylufr9oRG8');
+            // Renomeado para 'sbClient' para evitar conflito de redeclaração
+            const sbClient = window.supabase.createClient('https://lvxymjdbekmuqeyqrrwi.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eHltamRiZWttdXFleXFycndpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTI4ODUsImV4cCI6MjA5MTQyODg4NX0.9yNRM-DAdQx8h1tmit46M45WDubB3fPYLylufr9oRG8');
             console.log("Supabase inicializado.");
 
             document.getElementById('signupBtn').addEventListener('click', async () => {
-                console.log("Botão clicado!");
                 const email = document.getElementById('email').value;
                 const pass = document.getElementById('pass').value;
                 const role = document.getElementById('role').value;
@@ -47,7 +47,7 @@
                 }
 
                 try {
-                    const { data, error } = await supabase.auth.signUp({
+                    const { data, error } = await sbClient.auth.signUp({
                         email: email,
                         password: pass,
                         options: { data: { role: role } }
@@ -57,7 +57,6 @@
                     alert("Conta criada! Verifique seu e-mail.");
                     window.location.href = 'login.html';
                 } catch (err) {
-                    console.error("Erro Supabase:", err);
                     alert("Erro ao registrar: " + err.message);
                 }
             });
