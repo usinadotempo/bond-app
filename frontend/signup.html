@@ -30,28 +30,40 @@
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Correção: Supabase via CDN é exposto em window.supabase
-        const supabase = window.supabase.createClient('https://lvxymjdbekmuqeyqrrwi.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eHltamRiZWttdXFleXFycndpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTI4ODUsImV4cCI6MjA5MTQyODg4NX0.9yNRM-DAdQx8h1tmit46M45WDubB3fPYLylufr9oRG8');
+        console.log("Script carregado.");
+        try {
+            const supabase = window.supabase.createClient('https://lvxymjdbekmuqeyqrrwi.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eHltamRiZWttdXFleXFycndpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTI4ODUsImV4cCI6MjA5MTQyODg4NX0.9yNRM-DAdQx8h1tmit46M45WDubB3fPYLylufr9oRG8');
+            console.log("Supabase inicializado.");
 
-        document.getElementById('signupBtn').addEventListener('click', async () => {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-            const role = document.getElementById('role').value;
-            
-            try {
-                const { data, error } = await supabase.auth.signUp({
-                    email: email,
-                    password: pass,
-                    options: { data: { role: role } }
-                });
+            document.getElementById('signupBtn').addEventListener('click', async () => {
+                console.log("Botão clicado!");
+                const email = document.getElementById('email').value;
+                const pass = document.getElementById('pass').value;
+                const role = document.getElementById('role').value;
                 
-                if (error) throw error;
-                alert("Conta criada! Verifique seu e-mail.");
-                window.location.href = 'login.html';
-            } catch (err) {
-                alert("Erro: " + err.message);
-            }
-        });
+                if (!email || !pass) {
+                    alert("Preencha e-mail e senha.");
+                    return;
+                }
+
+                try {
+                    const { data, error } = await supabase.auth.signUp({
+                        email: email,
+                        password: pass,
+                        options: { data: { role: role } }
+                    });
+                    
+                    if (error) throw error;
+                    alert("Conta criada! Verifique seu e-mail.");
+                    window.location.href = 'login.html';
+                } catch (err) {
+                    console.error("Erro Supabase:", err);
+                    alert("Erro ao registrar: " + err.message);
+                }
+            });
+        } catch(e) {
+            console.error("Erro na inicialização:", e);
+        }
     </script>
 </body>
 </html>
