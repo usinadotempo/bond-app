@@ -3,56 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bond | Conexão Familiar e Cuidado Digital</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <title>Bond | Laços Digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        .gradient-bg { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
-        .accent-text { color: #e67e22; }
+        :root {
+            --bg: #0f172a;
+            --accent: #f59e0b;
+            --text: #f8fafc;
+            --soft: #64748b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 5rem; margin-bottom: 1.5rem; line-height: 1; letter-spacing: -0.05em; }
+        .hero p { font-size: 1.5rem; color: var(--soft); max-width: 600px; margin-bottom: 3rem; }
+        
+        .cta { background: var(--accent); color: var(--bg); padding: 1.2rem 3rem; border-radius: 50px; font-weight: 600; text-decoration: none; transition: transform 0.3s; }
+        .cta:hover { transform: scale(1.05); }
+
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; padding: 5rem 10%; max-width: 1400px; margin: auto; }
+        .card { border-left: 2px solid var(--accent); padding-left: 2rem; }
+        .card h3 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; }
+        
+        /* Decorative Background */
+        .mesh { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.1; 
+                background: radial-gradient(circle at 80% 20%, #f59e0b, transparent), radial-gradient(circle at 20% 80%, #3498db, transparent); }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <!-- Navbar -->
-    <nav class="p-6 flex justify-between items-center bg-white shadow-sm">
-        <h1 class="text-2xl font-bold text-blue-600">Bond</h1>
-        <a href="#cadastro" class="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition">Quero conhecer</a>
-    </nav>
+<body>
+    <div class="mesh"></div>
 
-    <!-- Hero -->
-    <header class="gradient-bg text-white py-20 px-6 text-center">
-        <h2 class="text-5xl font-extrabold mb-6">Segurança digital que aproxima a família.</h2>
-        <p class="text-xl mb-10 max-w-2xl mx-auto">Troque a vigilância pelo diálogo. Com o Bond, o tempo de tela do seu filho vira parceria, aprendizado e recompensas reais.</p>
-        <a href="#cadastro" class="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-full text-lg font-bold transition shadow-lg">Começar jornada gratuita</a>
-    </header>
-
-    <!-- Features -->
-    <section class="py-20 px-6 max-w-5xl mx-auto">
-        <div class="grid md:grid-cols-3 gap-12">
-            <div class="text-center">
-                <div class="text-4xl mb-4">🤝</div>
-                <h3 class="text-xl font-bold mb-2">Acordos Digitais</h3>
-                <p>Pais e filhos definem juntos as regras de ouro, criando um ambiente de confiança mútua.</p>
-            </div>
-            <div class="text-center">
-                <div class="text-4xl mb-4">🏆</div>
-                <h3 class="text-xl font-bold mb-2">Recompensas Reais</h3>
-                <p>O tempo de tela saudável vira moedas virtuais, trocadas por prêmios que a criança valoriza.</p>
-            </div>
-            <div class="text-center">
-                <div class="text-4xl mb-4">💬</div>
-                <h3 class="text-xl font-bold mb-2">Conexão Real</h3>
-                <p>Menos telas, mais papo. O app incentiva momentos offline de qualidade para toda a família.</p>
-            </div>
-        </div>
+    <section class="hero">
+        <h1>Bond.</h1>
+        <p>A tecnologia que devolve o tempo, a presença e a conexão entre pais e filhos.</p>
+        <a href="#join" class="cta">Criar laço</a>
     </section>
 
-    <!-- CTA Footer -->
-    <footer id="cadastro" class="py-20 bg-gray-900 text-white text-center px-6">
-        <h2 class="text-3xl font-bold mb-6">Pronto para fortalecer seu laço familiar?</h2>
-        <p class="mb-10 text-gray-400">Junte-se às famílias que já transformaram seu cotidiano digital.</p>
-        <form class="max-w-md mx-auto flex gap-2">
-            <input type="email" placeholder="Seu melhor e-mail" class="flex-1 p-3 rounded text-gray-900">
-            <button class="bg-blue-600 px-6 py-3 rounded font-bold hover:bg-blue-700">Entrar na lista</button>
-        </form>
-    </footer>
+    <div class="grid-layout">
+        <div class="card">
+            <h3>Acordos</h3>
+            <p>Esqueça a vigilância. Estabeleçam metas reais e conquistem recompensas juntos através da confiança mútua.</p>
+        </div>
+        <div class="card">
+            <h3>Equilíbrio</h3>
+            <p>O tempo de tela bem aproveitado se transforma em bônus para a vida offline.</p>
+        </div>
+        <div class="card">
+            <h3>Conexão</h3>
+            <p>Um ambiente desenhado para fomentar o diálogo e o entendimento das necessidades de cada fase.</p>
+        </div>
+    </div>
 </body>
 </html>
