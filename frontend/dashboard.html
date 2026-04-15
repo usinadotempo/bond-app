@@ -56,8 +56,19 @@
     <main>
         <header>
             <h1>Dashboard</h1>
-            <button style="background:var(--accent); border:none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">Criar Acordo</button>
+            <button onclick="toggleModal()" style="background:var(--accent); border:none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">Criar Acordo</button>
         </header>
+
+        <!-- Modal -->
+        <div id="agreementModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+            <div style="background:var(--panel); padding:2rem; border-radius:12px; border:1px solid #333; width:400px;">
+                <h3 style="margin-bottom:1rem;">Novo Acordo</h3>
+                <input type="text" id="title" placeholder="Título da Regra" style="width:100%; padding:0.5rem; margin-bottom:1rem; background:#222; border:1px solid #444; color:white;">
+                <textarea id="desc" placeholder="Descrição" style="width:100%; padding:0.5rem; margin-bottom:1rem; background:#222; border:1px solid #444; color:white;"></textarea>
+                <button onclick="saveAgreement()" style="background:var(--accent); width:100%; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salvar</button>
+                <button onclick="toggleModal()" style="background:transparent; color:var(--soft); width:100%; padding:0.5rem; border:none; cursor:pointer;">Cancelar</button>
+            </div>
+        </div>
         
         <div class="stats-grid">
             <div class="card">
@@ -90,6 +101,19 @@
 
     <script type="module">
         import { loadDashboardData } from './api.js';
+
+        window.toggleModal = () => {
+            const modal = document.getElementById('agreementModal');
+            modal.style.display = modal.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        window.saveAgreement = async () => {
+            const title = document.getElementById('title').value;
+            const desc = document.getElementById('desc').value;
+            // Aqui chamaria a função createAgreement do backend
+            console.log("Salvando:", title, desc);
+            toggleModal();
+        }
 
         async function initDashboard() {
             const agreements = await loadDashboardData();
