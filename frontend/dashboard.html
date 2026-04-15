@@ -26,11 +26,16 @@
         header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3rem; }
         h1 { font-family: 'Playfair Display', serif; font-size: 3rem; }
         
-        /* Dashboard Cards */
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .card { background: var(--panel); padding: 2rem; border-radius: 12px; border: 1px solid #222; }
-        .card h4 { color: var(--soft); margin-bottom: 0.5rem; font-weight: 300; }
-        .card p { font-size: 2rem; font-weight: 600; }
+        /* Dashboard Cards - Responsive */
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            nav { width: 100%; height: auto; flex-direction: row; justify-content: space-between; border-right: none; border-bottom: 1px solid #222; padding: 1rem 2rem; }
+            .nav-links { display: flex; gap: 1.5rem; }
+            .nav-links a { margin-bottom: 0; }
+            .stats-grid { grid-template-columns: 1fr; }
+            main { padding: 1.5rem; }
+            h1 { font-size: 2rem; }
+        }
 
         /* Agreement List */
         .agreement-table { width: 100%; margin-top: 3rem; border-collapse: collapse; }
