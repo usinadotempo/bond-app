@@ -110,13 +110,21 @@
         window.saveAgreement = async () => {
             const title = document.getElementById('title').value;
             const desc = document.getElementById('desc').value;
+            const parentId = localStorage.getItem('user_id');
+            
+            if (!parentId) {
+                alert("Você precisa estar logado para criar um acordo.");
+                return;
+            }
+
             try {
-                await createAgreement(title, desc);
-                alert("Acordo criado!");
+                // Chamada direta da função de API que já está no api.js
+                await createAgreement(title, desc, parentId);
+                alert("Acordo criado com sucesso!");
                 toggleModal();
-                initDashboard();
+                initDashboard(); // Recarrega a tabela
             } catch (err) {
-                alert("Erro: " + err.message);
+                alert("Erro ao salvar acordo: " + err.message);
             }
         }
 
