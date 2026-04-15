@@ -31,7 +31,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // Configurações (Essas deverão ser injetadas com segurança no build final)
-        const supabase = supabase.createClient('SUA_URL_SUPABASE', 'SUA_KEY_ANON');
+        const supabase = supabase.createClient('', '');
 
         document.getElementById('signupBtn').onclick = async () => {
             const email = document.getElementById('email').value;
