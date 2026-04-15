@@ -3,39 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bond | Autenticação</title>
+    <title>Bond | Criar Conta</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050505; --panel: #111111; --accent: #f59e0b; --text: #ffffff; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .auth-card { background: var(--panel); padding: 3rem; border-radius: 16px; width: 100%; max-width: 400px; border: 1px solid #222; }
         h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 2rem; }
-        input { width: 100%; padding: 1rem; margin-bottom: 1rem; background: #222; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; }
+        input, select { width: 100%; padding: 1rem; margin-bottom: 1rem; background: #222; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; }
         button { width: 100%; padding: 1rem; background: var(--accent); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         button:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
     <div class="auth-card">
-        <h2>Bem-vindo.</h2>
+        <h2>Criar conta.</h2>
         <input type="email" id="email" placeholder="E-mail">
         <input type="password" id="pass" placeholder="Senha">
-        <button id="loginBtn">Entrar no Bond</button>
-        <p style="margin-top: 1rem; text-align: center; color: #666; font-size: 0.9rem;">
-            Ainda não tem laço? <button onclick="window.location.href='signup.html'" style="background:none; border:none; color: var(--accent); cursor:pointer; font-weight:bold;">Criar conta</button>
-        </p>
+        <select id="role">
+            <option value="parent">Pai/Mãe</option>
+            <option value="child">Filho(a)</option>
+        </select>
+        <button id="signupBtn">Registrar no Bond</button>
     </div>
 
     <script type="module">
-        import { signIn } from '../backend/auth.js';
-        document.getElementById('loginBtn').onclick = async () => {
+        import { signUp } from '../backend/auth.js';
+        document.getElementById('signupBtn').onclick = async () => {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('pass').value;
+            const role = document.getElementById('role').value;
             try {
-                await signIn(email, pass);
-                window.location.href = 'dashboard.html';
+                await signUp(email, pass, role);
+                alert("Conta criada! Verifique seu e-mail.");
+                window.location.href = 'login.html';
             } catch (err) {
-                alert("Falha no login: " + err.message);
+                alert("Erro ao criar conta: " + err.message);
             }
         };
     </script>
