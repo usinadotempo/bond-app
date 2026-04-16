@@ -6,41 +6,34 @@
     <title>Bond Dashboard | Conexão em Tempo Real</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #050505;
-            --panel: #111111;
-            --accent: #f59e0b;
-            --text: #ffffff;
-            --soft: #a0a0a0;
-        }
+        :root { --bg: #050505; --panel: #111111; --accent: #f59e0b; --text: #ffffff; --soft: #a0a0a0; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; display: flex; height: 100vh; }
         
-        /* Sidebar */
         nav { width: 260px; background: var(--panel); border-right: 1px solid #222; padding: 2rem; display: flex; flex-direction: column; gap: 3rem; }
         .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; letter-spacing: -0.02em; }
         .nav-links a { display: block; color: var(--soft); text-decoration: none; margin-bottom: 1.5rem; transition: 0.3s; }
         .nav-links a:hover { color: var(--accent); }
 
-        /* Main Area */
         main { flex: 1; padding: 3rem; overflow-y: auto; }
         header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3rem; }
         h1 { font-family: 'Playfair Display', serif; font-size: 3rem; }
         
-        /* Dashboard Cards - Responsive */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .card { background: var(--panel); padding: 2rem; border-radius: 12px; border: 1px solid #222; }
+        .card h4 { color: var(--soft); margin-bottom: 0.5rem; font-weight: 300; }
+        .card p { font-size: 2rem; font-weight: 600; }
+
+        .agreement-table { width: 100%; margin-top: 3rem; border-collapse: collapse; }
+        .agreement-table th { text-align: left; color: var(--soft); padding: 1rem; border-bottom: 1px solid #333; }
+        .agreement-table td { padding: 1rem; border-bottom: 1px solid #222; }
+
         @media (max-width: 900px) {
             body { flex-direction: column; overflow-x: hidden; }
             nav { width: 100vw; height: auto; flex-direction: row; justify-content: space-between; border-right: none; border-bottom: 1px solid #222; padding: 1rem 2rem; box-sizing: border-box; }
             .nav-links { display: flex; gap: 1.5rem; overflow-x: auto; }
-            .nav-links a { margin-bottom: 0; white-space: nowrap; }
             .stats-grid { grid-template-columns: 1fr; width: 100%; box-sizing: border-box; }
             main { padding: 1.5rem; width: 100vw; box-sizing: border-box; overflow-x: hidden; }
-            h1 { font-size: 2rem; }
         }
-
-        /* Agreement List */
-        .agreement-table { width: 100%; margin-top: 3rem; border-collapse: collapse; }
-        .agreement-table th { text-align: left; color: var(--soft); padding: 1rem; border-bottom: 1px solid #333; }
-        .agreement-table td { padding: 1rem; border-bottom: 1px solid #222; }
     </style>
 </head>
 <body>
@@ -56,88 +49,67 @@
     <main>
         <header>
             <h1>Dashboard</h1>
-            <button onclick="toggleModal()" style="background:var(--accent); border:none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">Criar Acordo</button>
+            <button id="openModalBtn" style="background:var(--accent); border:none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">Criar Acordo</button>
         </header>
 
         <!-- Modal -->
-        <div id="agreementModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+        <div id="agreementModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index: 1000;">
             <div style="background:var(--panel); padding:2rem; border-radius:12px; border:1px solid #333; width:400px;">
                 <h3 style="margin-bottom:1rem;">Novo Acordo</h3>
                 <input type="text" id="title" placeholder="Título da Regra" style="width:100%; padding:0.5rem; margin-bottom:1rem; background:#222; border:1px solid #444; color:white;">
                 <textarea id="desc" placeholder="Descrição" style="width:100%; padding:0.5rem; margin-bottom:1rem; background:#222; border:1px solid #444; color:white;"></textarea>
-                <button onclick="saveAgreement()" style="background:var(--accent); width:100%; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salvar</button>
-                <button onclick="toggleModal()" style="background:transparent; color:var(--soft); width:100%; padding:0.5rem; border:none; cursor:pointer;">Cancelar</button>
+                <button id="saveAgreementBtn" style="background:var(--accent); width:100%; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salvar</button>
+                <button id="cancelModalBtn" style="background:transparent; color:var(--soft); width:100%; padding:0.5rem; border:none; cursor:pointer;">Cancelar</button>
             </div>
         </div>
         
         <div class="stats-grid">
-            <div class="card">
-                <h4>Acordos Ativos</h4>
-                <p>3</p>
-            </div>
-            <div class="card">
-                <h4>Moedas Acumuladas</h4>
-                <p>450</p>
-            </div>
-            <div class="card">
-                <h4>Confiança Digital</h4>
-                <p>94%</p>
-            </div>
+            <div class="card"><h4>Acordos Ativos</h4><p id="count">0</p></div>
+            <div class="card"><h4>Moedas</h4><p>0</p></div>
+            <div class="card"><h4>Confiança</h4><p>100%</p></div>
         </div>
 
         <table class="agreement-table">
-            <thead>
-                <tr>
-                    <th>Regra</th>
-                    <th>Status</th>
-                    <th>Progresso</th>
-                </tr>
-            </thead>
-            <tbody id="agreements-body">
-                <!-- Dados carregados via API -->
-            </tbody>
+            <thead><tr><th>Regra</th><th>Status</th><th>Progresso</th></tr></thead>
+            <tbody id="agreements-body"></tbody>
         </table>
     </main>
 
     <script type="module">
         import { loadDashboardData, createAgreement } from './api.js';
 
-        window.toggleModal = () => {
-            const modal = document.getElementById('agreementModal');
-            modal.style.display = modal.style.display === 'none' ? 'flex' : 'none';
-        }
+        const modal = document.getElementById('agreementModal');
 
-        window.saveAgreement = async () => {
+        document.getElementById('openModalBtn').addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        document.getElementById('cancelModalBtn').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        document.getElementById('saveAgreementBtn').addEventListener('click', async () => {
             const title = document.getElementById('title').value;
             const desc = document.getElementById('desc').value;
             const parentId = localStorage.getItem('user_id');
             
-            if (!parentId) {
-                alert("Você precisa estar logado para criar um acordo.");
-                return;
-            }
-
             try {
-                // Chamada direta da função de API que já está no api.js
                 await createAgreement(title, desc, parentId);
-                alert("Acordo criado com sucesso!");
-                toggleModal();
-                initDashboard(); // Recarrega a tabela
+                alert("Acordo criado!");
+                modal.style.display = 'none';
+                await initDashboard();
             } catch (err) {
-                alert("Erro ao salvar acordo: " + err.message);
+                alert("Erro: " + err.message);
             }
-        }
+        });
 
         async function initDashboard() {
             const agreements = await loadDashboardData();
             const body = document.getElementById('agreements-body');
+            document.getElementById('count').innerText = agreements?.length || 0;
             if (agreements && agreements.length > 0) {
                 body.innerHTML = agreements.map(a => `
-                    <tr>
-                        <td>${a.title}</td>
-                        <td style="color:var(--accent)">${a.is_active ? 'Ativo' : 'Inativo'}</td>
-                        <td>${a.progress || '0%'}</td>
-                    </tr>
+                    <tr><td>${a.title}</td><td style="color:var(--accent)">Ativo</td><td>0%</td></tr>
                 `).join('');
             }
         }
