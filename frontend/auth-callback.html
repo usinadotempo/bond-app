@@ -21,7 +21,26 @@
             const hash = window.location.hash.substring(1);
             if (hash) {
                 document.getElementById('status').innerText = "Autenticando...";
-                window.location.href = 'dashboard.html';
+                
+                // Extrair o access_token da URL
+                const params = new URLSearchParams(hash);
+                const accessToken = params.get('access_token');
+                
+                if (accessToken) {
+                    // Tentar definir a sessão
+                    const { data, error } = await sbClient.auth.setSession({
+                        access_token: accessToken,
+                        refresh_token: params.get('refresh_token')
+                    });
+
+                    if (error) {
+                        document.getElementById('status').innerText = "Erro: " + error.message;
+                    } else {
+                        // Salva o user_id para nossa lógica de criação de acordos
+                        localStorage.setItem('user_id', data.session.user.id);
+                        window.location.href = 'dashboard.html';
+                    }
+                }
             } else {
                 document.getElementById('status').innerText = "Erro: Token não encontrado.";
             }
